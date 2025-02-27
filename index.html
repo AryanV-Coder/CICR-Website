@@ -27,6 +27,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Adjust based on your header height */
         }
 
         body {
@@ -42,7 +43,7 @@
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
 
         /* Header Styles */
@@ -112,7 +113,8 @@
 
         /* Hero Section */
         #hero {
-            height: 100vh;
+            min-height: 100vh;
+            padding: 120px 0 60px;
             position: relative;
             display: flex;
             justify-content: center;
@@ -133,13 +135,14 @@
             position: relative;
             z-index: 2;
             text-align: center;
+            width: 100%;
             max-width: 800px;
-            padding: 0 20px;
+            padding: 0 15px;
         }
 
         .glitch {
             font-family: 'Orbitron', sans-serif;
-            font-size: 4.5em;
+            font-size: clamp(2.5em, 8vw, 4.5em);
             font-weight: bold;
             position: relative;
             color: var(--text-color);
@@ -188,11 +191,38 @@
         }
 
         .hero-subtitle {
-            font-size: 1.8em;
+            font-size: clamp(1.2em, 4vw, 1.8em);
             margin: 20px 0;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+
+        .synergy-alert {
+            background: linear-gradient(90deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1));
+            padding: 10px 15px;
+            border-radius: 30px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            max-width: fit-content;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            animation: glow 2s infinite alternate;
+        }
+
+        .synergy-alert i {
+            color: var(--primary-color);
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(0,255,255,0.2);
+            }
+            to {
+                box-shadow: 0 0 15px rgba(0,255,255,0.4);
+            }
         }
 
         .hero-cta {
@@ -286,14 +316,16 @@
 
         .about-cards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Arrange 3 cards per row */
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 0 auto;
+            max-width: 1000px;
         }
 
         .about-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -407,8 +439,10 @@
         /* Events Section */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
+            margin: 30px auto;
+            max-width: 1000px;
         }
 
         .event {
@@ -416,35 +450,79 @@
             border-radius: 20px;
             overflow: hidden;
             display: flex;
-            transition: transform 0.3s ease;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            min-height: unset;
+            height: 100%;
         }
 
         .event:hover {
             transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
         }
 
         .event-date {
             background: var(--gradient-1);
             padding: 20px;
             text-align: center;
-            min-width: 180px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
         .date {
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
             font-family: 'Orbitron', sans-serif;
         }
 
         .month {
             font-size: 1.2em;
+            text-transform: uppercase;
         }
 
         .event-content {
             padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .event-content h3 {
+            color: var(--primary-color);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .event-content p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .event-details {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .event-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+        }
+
+        .event-info i {
+            color: var(--primary-color);
+        }
+
+        .event-btn {
+            width: 100%;
+            text-align: center;
+            margin-top: auto;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
         /* Contact Form */
@@ -558,14 +636,14 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Loading Animation */
+        /* Loading Screen Styles */
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--bg-color);
+            background-color: rgba(10, 10, 10, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -573,13 +651,42 @@
             transition: opacity 0.5s ease-out;
         }
 
+        .loading-content {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .loading-logo {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .brain-logo {
+            width: min(120px, 30vw);
+            height: auto;
+            filter: drop-shadow(0 0 10px var(--primary-color));
+            animation: pulse 2s infinite;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 15px;
+            text-shadow: 0 0 10px var(--primary-color);
+            animation: glow 2s infinite alternate;
+        }
+
         .loading-bar-container {
-            width: 300px;
+            width: min(300px, 80vw);
             height: 4px;
             background: rgba(0, 255, 255, 0.1);
             border-radius: 2px;
             margin: 20px auto;
             overflow: hidden;
+            position: relative;
         }
 
         .loading-bar {
@@ -588,73 +695,497 @@
             background: var(--gradient-1);
             border-radius: 2px;
             transition: width 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: loading-shine 1.5s infinite;
         }
 
         .loading-percentage {
             font-family: 'Orbitron', sans-serif;
             color: var(--primary-color);
-            font-size: 1.5em;
-            text-shadow: 0 0 10px var(--primary-color);
+            font-size: 1.2em;
+            margin-top: 10px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .about-grid {
-                grid-template-columns: 1fr;
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
             }
-            
-            .glitch {
-                font-size: 3.5em;
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
             }
-
-            .hero-subtitle {
-                font-size: 1.4em;
+            100% {
+                transform: scale(1);
+                opacity: 1;
             }
         }
 
+        @keyframes loading-shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Event Timing Styles */
+        .event-timing {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            margin: 15px 0;
+        }
+
+        .event-timing i {
+            color: var(--primary-color);
+        }
+
+        .event-timing span {
+            color: var(--text-secondary);
+        }
+
+        /* Remove countdown related styles */
+        .event-countdown,
+        .countdown-item,
+        .countdown-number,
+        .countdown-label {
+            display: none;
+        }
+
+        /* Mobile Responsive Updates */
         @media (max-width: 768px) {
+            /* Header improvements */
+            header {
+                padding: 10px 0;
+            }
+
             .header-content {
                 flex-direction: column;
-                padding: 10px;
+                gap: 15px;
+                padding: 5px 0;
+            }
+
+            .logo {
+                font-size: 2em;
             }
 
             nav ul {
-                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 5px;
+            }
+
+            nav ul li a {
+                font-size: 0.9em;
+                padding: 8px 15px;
+                background: rgba(0, 255, 255, 0.05);
+                border-radius: 20px;
+                display: block;
+            }
+
+            /* Hero section improvements */
+            #hero {
+                padding: 100px 0 40px;
+            }
+
+            .hero-content {
+                padding: 0 15px;
+            }
+
+            .glitch {
+                font-size: clamp(2em, 7vw, 3em);
+                line-height: 1.2;
+            }
+
+            .hero-subtitle {
+                font-size: clamp(1em, 4vw, 1.4em);
+                margin: 15px 0;
+            }
+
+            .synergy-alert {
+                font-size: 0.9em;
+                padding: 8px 15px;
+                margin: 15px auto;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 25px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                margin: 0 auto;
+                padding: 12px 25px;
+                font-size: 1em;
+                height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Section improvements */
+            .section {
+                padding: 40px 0;
+            }
+
+            .section-title {
+                font-size: 2em;
+                margin-bottom: 25px;
+            }
+
+            /* About section improvements */
+            .about-cards {
+                gap: 15px;
+            }
+
+            .about-card {
+                padding: 20px;
+                text-align: center;
+            }
+
+            .about-icon {
+                font-size: 2em;
+            }
+
+            .about-card h3 {
+                font-size: 1.2em;
+            }
+
+            .about-card p {
+                font-size: 0.9em;
+            }
+
+            /* Events section improvements */
+            .events-grid {
+                gap: 20px;
+                padding: 0 10px;
+            }
+
+            .event {
+                border-radius: 15px;
+            }
+
+            .event-date {
+                padding: 15px;
+            }
+
+            .date {
+                font-size: 2em;
+            }
+
+            .month {
+                font-size: 1em;
+            }
+
+            .event-content {
+                padding: 15px;
+            }
+
+            .event-content h3 {
+                font-size: 1.3em;
+            }
+
+            .event-content p {
+                font-size: 0.9em;
+                line-height: 1.5;
+            }
+
+            .event-details {
+                gap: 10px;
+            }
+
+            .event-info {
+                font-size: 0.9em;
+                background: rgba(255, 255, 255, 0.03);
+                padding: 8px 12px;
+                border-radius: 8px;
+                justify-content: center;
+            }
+
+            .event-timing {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 8px;
+                background: rgba(255, 255, 255, 0.03);
+                padding: 10px;
+                border-radius: 8px;
+                margin: 12px 0;
+            }
+
+            .event-timing span {
+                font-size: 0.9em;
+            }
+
+            .event-btn {
+                height: 45px;
+                font-size: 0.95em;
+            }
+
+            /* Contact form improvements */
+            .contact-form {
+                padding: 0 15px;
+            }
+
+            .form-group {
+                margin-bottom: 25px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 12px;
+                font-size: 0.95em;
+            }
+
+            .form-group label {
+                font-size: 0.9em;
+            }
+
+            /* Footer improvements */
+            footer {
+                padding: 40px 0 20px;
+            }
+
+            .footer-content {
+                gap: 30px;
+                text-align: center;
+            }
+
+            .footer-links ul {
+                display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 15px;
             }
 
-            .glitch {
-                font-size: 2.5em;
+            .social-icons {
+                justify-content: center;
             }
 
-            .hero-cta {
-                flex-direction: column;
+            /* Loading screen improvements */
+            .loading-content {
+                padding: 0 20px;
+            }
+
+            .brain-logo {
+                width: 80px;
+            }
+
+            .logo-text {
+                font-size: 1.8em;
+            }
+
+            .loading-bar-container {
+                width: 80%;
+                max-width: 250px;
+            }
+
+            /* Floating button improvements */
+            .floating-register {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .floating-register i {
+                font-size: 18px;
+            }
+        }
+
+        /* Add styles for better touch targets */
+        @media (max-width: 768px) and (hover: none) {
+            nav ul li a,
+            .btn,
+            .event-btn,
+            .social-icon {
+                min-height: 44px;
+                min-width: 44px;
+                display: flex;
                 align-items: center;
+                justify-content: center;
             }
 
-            .btn {
+            .form-group input,
+            .form-group textarea {
+                min-height: 44px;
+            }
+        }
+
+        /* Update these styles for better mobile responsiveness */
+
+        /* Header/Navbar improvements */
+        @media (max-width: 768px) {
+            .header-content {
                 width: 100%;
-                max-width: 300px;
+                padding: 5px 15px;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+                width: 100%;
+                padding: 0 10px;
+            }
+
+            nav ul li {
+                flex: 0 1 auto;
+                min-width: 80px;
+            }
+
+            nav ul li a {
+                font-size: 0.85em;
+                padding: 8px 12px;
                 text-align: center;
+                white-space: nowrap;
+                width: 100%;
+            }
+
+            /* Loading screen fixes */
+            .loading-overlay {
+                padding: 20px;
+            }
+
+            .loading-content {
+                width: 85%;
+                max-width: 300px;
+                padding: 0;
+            }
+
+            .brain-logo {
+                width: 70px;
+                height: auto;
+            }
+
+            .logo-text {
+                font-size: 1.8em;
+                margin-top: 10px;
+            }
+
+            .loading-bar-container {
+                width: 100%;
+                max-width: 250px;
+                margin: 15px auto;
+            }
+
+            /* About section improvements */
+            .about-grid {
+                gap: 30px;
+                padding: 0 10px;
+            }
+
+            .about-cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                width: 100%;
+            }
+
+            .about-card {
+                margin: 0;
+                padding: 20px 15px;
+                width: 100%;
             }
 
             .about-stats {
                 grid-template-columns: 1fr;
-            }
-            
-            .events-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
+                gap: 15px;
+                padding: 0;
+                margin-top: 25px;
             }
 
-            .social-icons {
-                justify-content: center;
+            .stat-item {
+                padding: 15px;
+            }
+
+            .stat-number {
+                font-size: 2em;
+            }
+
+            .stat-label {
+                font-size: 0.9em;
+            }
+
+            /* Container width fix */
+            .container {
+                width: 100%;
+                padding: 0 15px;
+            }
+
+            /* Section title adjustment */
+            .section-title {
+                font-size: 1.8em;
+                margin-bottom: 25px;
+                padding: 0 10px;
+            }
+        }
+
+        /* Add styles for very small screens */
+        @media (max-width: 360px) {
+            nav ul li a {
+                font-size: 0.8em;
+                padding: 6px 10px;
+            }
+
+            .loading-content {
+                width: 90%;
+            }
+
+            .brain-logo {
+                width: 60px;
+            }
+
+            .logo-text {
+                font-size: 1.5em;
+            }
+
+            .about-card {
+                padding: 15px;
+            }
+
+            .about-icon {
+                font-size: 1.8em;
+            }
+
+            .about-card h3 {
+                font-size: 1.1em;
+            }
+        }
+
+        /* Add tablet specific improvements */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .about-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .container {
+                width: 95%;
             }
         }
     </style>
@@ -662,6 +1193,10 @@
 <body>
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-content">
+            <div class="loading-logo">
+                <img src="./cicr-logo.png" alt="CICR Logo" class="brain-logo">
+                <div class="logo-text">CICR</div>
+            </div>
             <div class="loading-bar-container">
                 <div class="loading-bar"></div>
             </div>
@@ -684,13 +1219,22 @@
         </div>
     </header>
 
+    <a href="#events" class="floating-register" title="Register for Events">
+        <i class="fas fa-rocket"></i>
+    </a>
+
     <section id="hero">
         <div class="hero-particles" id="particles-js"></div>
         <div class="hero-content">
             <h1 class="glitch" data-text="Welcome to CICR">Welcome to CICR</h1>
             <p class="hero-subtitle">The Robotic Club of JIIT-128</p>
+            <div class="synergy-alert">
+                <i class="fas fa-star"></i>
+                <span>Register now for Synergy'25 Events!</span>
+                <i class="fas fa-star"></i>
+            </div>
             <div class="hero-cta">
-                <a href="#about" class="btn btn-primary">Discover More</a>
+                <a href="#events" class="btn btn-primary">Register for Events</a>
                 <a href="#contact" class="btn btn-secondary">Query?</a>
             </div>
         </div>
@@ -769,26 +1313,62 @@
 
     <section id="events" class="section">
         <div class="container">
-            <h2 class="section-title">Recent Events</h2>
+            <h2 class="section-title">Upcoming Events</h2>
             <div class="events-grid">
                 <div class="event">
                     <div class="event-date">
-                        <span class="date">19-21</span>
-                        <span class="month">SEP</span>
+                        <span class="date">28</span>
+                        <span class="month">FEB</span>
                     </div>
                     <div class="event-content">
-                        <h3>TechTonic 1.0</h3>
-                        <p>An annual robotics workshop focused on teaching new technologies used in the Industry.</p>
+                        <h3>Circuit Rush</h3>
+                        <p>Navigate through obstacles in the shortest time. Test your bot's speed and precision!</p>
+                        <div class="event-details">
+                            <div class="event-info">
+                                <i class="fas fa-users"></i> Individual Event
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-clock"></i> Time-based Challenge
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-robot"></i> Bot Provided
+                            </div>
+                        </div>
+                        <div class="event-timing">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>28th February, 2024</span>
+                            <i class="fas fa-clock"></i>
+                            <span>1 PM Onwards</span>
+                        </div>
+                        <a href="https://forms.gle/Li3xmwbWrYMNEmGa7" target="_blank" class="btn btn-primary event-btn">Register Now</a>
                     </div>
                 </div>
                 <div class="event">
                     <div class="event-date">
-                        <span class="date">10</span>
-                        <span class="month">MAR</span>
+                        <span class="date">28</span>
+                        <span class="month">FEB</span>
                     </div>
                     <div class="event-content">
-                        <h3>Robo-Soccer</h3>
-                        <p>A 2v2 football match played by wireless bots.</p>
+                        <h3>Robo Soccer</h3>
+                        <p>2v2 football match played by wireless bots. Show off your robotics skills in this thrilling soccer showdown!</p>
+                        <div class="event-details">
+                            <div class="event-info">
+                                <i class="fas fa-users"></i> 2 Players/Team
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-clock"></i> 5 Min Match
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-robot"></i> Bot Provided
+                            </div>
+                        </div>
+                        <div class="event-timing">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>28th February, 2024</span>
+                            <i class="fas fa-clock"></i>
+                            <span>11:00 AM Onwards</span>
+                        </div>
+                        <a href="https://forms.gle/w3Uy2ZfCKm7Bm2UM8" target="_blank" class="btn btn-primary event-btn">Register Now</a>
                     </div>
                 </div>
             </div>
@@ -941,7 +1521,7 @@
             const body = document.body;
     
             let progress = 0;
-            const totalDuration = 2000;
+            const totalDuration = 2000; // 2 seconds
             const intervalDuration = 20;
             const incrementValue = (intervalDuration / totalDuration) * 100;
     
