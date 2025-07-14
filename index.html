@@ -46,23 +46,261 @@
             padding: 0 15px;
         }
 
-        /* Header Styles */
-        header {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
+      /* Updated Header Styles */
+header {
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(20px);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+}
 
-        header.scrolled {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 255, 255, 0.2);
-        }
+header.scrolled {
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 5px 30px rgba(0, 255, 255, 0.15);
+    padding: 10px 0;
+}
 
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2em;
+    font-weight: bold;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1001;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+    display: flex;
+    align-items: center;
+}
+
+.desktop-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.desktop-nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: block;
+}
+
+.desktop-nav ul li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: rgba(0, 255, 255, 0.1);
+    transition: width 0.3s ease;
+    border-radius: 25px;
+}
+
+.desktop-nav ul li a:hover::before {
+    width: 100%;
+}
+
+.desktop-nav ul li a:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.desktop-nav ul li.active a {
+    background: rgba(0, 255, 255, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1001;
+    width: 30px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hamburger {
+    width: 25px;
+    height: 2px;
+    background: var(--primary-color);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 2px;
+    background: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.hamburger::before {
+    top: -8px;
+}
+
+.hamburger::after {
+    top: 8px;
+}
+
+.mobile-menu-btn.active .hamburger {
+    background: transparent;
+}
+
+.mobile-menu-btn.active .hamburger::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.mobile-menu-btn.active .hamburger::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: rgba(17, 17, 17, 0.98);
+    backdrop-filter: blur(20px);
+    transition: right 0.3s ease;
+    z-index: 999;
+    padding: 80px 20px 20px;
+    overflow-y: auto;
+}
+
+.mobile-nav.active {
+    right: 0;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mobile-nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 15px 20px;
+    display: block;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.mobile-nav ul li a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: var(--primary-color);
+    transition: height 0.3s ease;
+}
+
+.mobile-nav ul li a:hover,
+.mobile-nav ul li.active a {
+    background: rgba(0, 255, 255, 0.1);
+    color: var(--primary-color);
+    padding-left: 30px;
+}
+
+.mobile-nav ul li a:hover::before,
+.mobile-nav ul li.active a::before {
+    height: 60%;
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
+
+    header {
+        padding: 15px 0;
+    }
+
+    .logo {
+        font-size: 1.8em;
+    }
+
+    body.menu-open {
+        overflow: hidden;
+    }
+}
         .header-content {
             display: flex;
             justify-content: space-between;
@@ -1013,6 +1251,24 @@
             }
         }
 
+        .past-event {
+            opacity: 0.8;
+            position: relative;
+        }
+
+        .past-event::after {
+            content: 'COMPLETED';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
         /* Add styles for better touch targets */
         @media (max-width: 768px) and (hover: none) {
             nav ul li a,
@@ -1188,6 +1444,11 @@
                 width: 95%;
             }
         }
+
+        .synergy-alert a:hover span {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
@@ -1205,40 +1466,53 @@
     </div>
 
     <header id="main-header">
-        <div class="container header-content">
-            <div class="logo">CICR</div>
-            <nav>
-                <ul>
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="container header-content">
+        <div class="logo">CICR</div>
+        <nav class="desktop-nav">
+            <ul>
+                <li class="active"><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#past-events">Past Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <span class="hamburger"></span>
+        </button>
+    </div>
+</header>
+
+
+<nav class="mobile-nav" id="mobileNav">
+    <ul>
+        <li class="active"><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <a href="#events" class="floating-register" title="Register for Events">
         <i class="fas fa-rocket"></i>
     </a>
 
     <section id="hero">
-        <div class="hero-particles" id="particles-js"></div>
-        <div class="hero-content">
-            <h1 class="glitch" data-text="Welcome to CICR">Welcome to CICR</h1>
-            <p class="hero-subtitle">The Robotic Club of JIIT-128</p>
-            <div class="synergy-alert">
-                <i class="fas fa-star"></i>
-                <span>Register now for Synergy'25 Events!</span>
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="hero-cta">
-                <a href="#events" class="btn btn-primary">Register for Events</a>
-                <a href="#contact" class="btn btn-secondary">Query?</a>
-            </div>
+    <div class="hero-particles" id="particles-js"></div>
+    <div class="hero-content">
+        <h1 class="glitch" data-text="CICR">CICR</h1>
+        <p class="hero-subtitle">The Robotics Hub of JIIT-128</p>
+        <div class="hero-cta">
+            <a href="https://chat.whatsapp.com/GZNiuEOZYYPGOUZQUV1JVa?mode=r_c" target="_blank" class="btn btn-primary">
+                <i class="fab fa-whatsapp"></i> Join Our Community
+            </a>
+            <a href="#about" class="btn btn-secondary">Learn More</a>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="about">
         <div class="container">
@@ -1312,8 +1586,44 @@
     </section>
 
     <section id="events" class="section">
-        <div class="container">
-            <h2 class="section-title">Upcoming Events</h2>
+    <div class="container">
+        <h2 class="section-title">Upcoming Events</h2>
+        <div class="events-grid">
+            <div class="event">
+                <div class="event-date">
+                    <span class="date">TBA</span>
+                    <span class="month"></span>
+                </div>
+                <div class="event-content">
+                    <h3>TechTonic 2.0</h3>
+                    <p>Join us for an exciting workshop featuring hands-on projects, amazing prizes, and cutting-edge technology!</p>
+                    <div class="event-details">
+                        <div class="event-info">
+                            <i class="fas fa-user"></i> Individual Event
+                        </div>
+                        <div class="event-info">
+                            <i class="fas fa-chalkboard-teacher"></i> Workshop
+                        </div>
+                        <div class="event-info">
+                            <i class="fas fa-trophy"></i> Prizes + Projects
+                        </div>
+                    </div>
+                    <div class="event-timing">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Date to be Announced</span>
+                        <i class="fas fa-clock"></i>
+                        <span>Time to be Announced</span>
+                    </div>
+                    <button class="btn btn-primary event-btn" disabled style="opacity: 0.6; cursor: not-allowed;">Registration Coming Soon</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="past-events" class="section">
+    <div class="container">
+        <h2 class="section-title">Past Events</h2>
             <div class="events-grid">
                 <div class="event">
                     <div class="event-date">
@@ -1340,7 +1650,7 @@
                             <i class="fas fa-clock"></i>
                             <span>1 PM Onwards</span>
                         </div>
-                        <a href="https://forms.gle/Li3xmwbWrYMNEmGa7" target="_blank" class="btn btn-primary event-btn">Register Now</a>
+                        <a href="https://forms.gle/Li3xmwbWrYMNEmGa7" target="_blank" button class="btn btn-primary event-btn" disabled style="opacity: 0.6; cursor: not-allowed;">Register Now</a>
                     </div>
                 </div>
                 <div class="event">
@@ -1368,33 +1678,39 @@
                             <i class="fas fa-clock"></i>
                             <span>11:00 AM Onwards</span>
                         </div>
-                        <a href="https://forms.gle/w3Uy2ZfCKm7Bm2UM8" target="_blank" class="btn btn-primary event-btn">Register Now</a>
+                        <a href="https://forms.gle/w3Uy2ZfCKm7Bm2UM8" target="_blank" button class="btn btn-primary event-btn" disabled style="opacity: 0.6; cursor: not-allowed;">Register Now</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <form id="contact-form" class="contact-form">
-                <div class="form-group">
-                    <input type="text" id="name" required>
-                    <label for="name">Name</label>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" required>
-                    <label for="email">Email</label>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" required></textarea>
-                    <label for="message">Message</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 800px; margin: 0 auto; text-align: center;">
+            <div class="contact-item">
+                <i class="fas fa-envelope" style="font-size: 2em; color: var(--primary-color); margin-bottom: 15px; display: block;"></i>
+                <h4>Email Us</h4>
+                <a href="mailto:contact@cicr.in" style="color: var(--primary-color); text-decoration: none;">
+                    contact@cicr.in
+                </a>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-whatsapp" style="font-size: 2em; color: var(--primary-color); margin-bottom: 15px; display: block;"></i>
+                <h4>Join Community</h4>
+                <a href="https://chat.whatsapp.com/GZNiuEOZYYPGOUZQUV1JVa?mode=r_c" target="_blank" style="color: var(--primary-color); text-decoration: none;">
+                    WhatsApp Group
+                </a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt" style="font-size: 2em; color: var(--primary-color); margin-bottom: 15px; display: block;"></i>
+                <h4>Visit Us</h4>
+                <p style="color: var(--text-secondary);">JIIT-128, Noida</p>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <footer>
         <div class="container">
@@ -1433,7 +1749,7 @@
         particlesJS('particles-js', {
             particles: {
                 number: {
-                    value: 80,
+                    value: window.innerHeight < 768 ? 40: 80,
                     density: {
                         enable: true,
                         value_area: 800
@@ -1613,8 +1929,53 @@
                 glitchText.style.animation = 'none';
                 void glitchText.offsetWidth; // Trigger reflow
                 glitchText.style.animation = null;
-            }, 2500);
+            }, 5000);
         }
+
+        // Mobile Menu Toggle
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileNav = document.getElementById('mobileNav');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const body = document.body;
+
+function toggleMobileMenu() {
+    mobileMenuBtn.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+    mobileMenuOverlay.classList.toggle('active');
+    body.classList.toggle('menu-open');
+}
+
+mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+// Close mobile menu when clicking on links
+document.querySelectorAll('.mobile-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+        toggleMobileMenu();
+    });
+});
+
+// Active nav item based on scroll
+window.addEventListener('scroll', () => {
+    let current = '';
+    const sections = document.querySelectorAll('section');
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= (sectionTop - 200)) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    const navLinks = document.querySelectorAll('nav ul li');
+    navLinks.forEach(li => {
+        li.classList.remove('active');
+        if (li.querySelector(`a[href="#${current}"]`)) {
+            li.classList.add('active');
+        }
+    });
+});
     </script>
 </body>
 </html>    
