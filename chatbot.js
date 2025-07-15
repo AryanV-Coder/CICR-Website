@@ -2,7 +2,7 @@ class Chatbot {
     constructor() {
         this.isOpen = false;
         this.isTyping = false;
-        this.apiUrl = 'http://127.0.0.1:8000/chat'; // Replace with your FastAPI backend URL
+        this.apiUrl = 'https://cicrchatbot.onrender.com/chat'; // Replace with your FastAPI backend URL
         
         this.initElements();
         this.bindEvents();
@@ -217,7 +217,7 @@ class Chatbot {
     // Method to clear chat history
     clearChat() {
         this.messagesContainer.innerHTML = '';
-        this.addMessageWithTypewriter('Hello! I\'m CICR Assistant. How can I help you today?', 'bot');
+        this.addMessageWithTypewriter('Hello! I\'m CICR AI Powered Assistant. How can I help you today?', 'bot');
     }
 
     // Method to set API URL (useful for different environments)
@@ -233,17 +233,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Optional: Expose chatbot instance globally for debugging
     window.chatbot = chatbot;
 });
-
-// Optional: Configuration for different environments
-const ChatbotConfig = {
-    development: {
-        apiUrl: 'http://localhost:8000/api/chat'
-    },
-    production: {
-        apiUrl: 'https://your-production-api.com/api/chat'
-    }
-};
-
-// Auto-detect environment and set API URL
-const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const config = isDevelopment ? ChatbotConfig.development : ChatbotConfig.production;
