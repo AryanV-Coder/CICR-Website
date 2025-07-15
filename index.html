@@ -6,6 +6,8 @@
     <title>CICR - The Robotics Hub of JIIT-128</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="chatbot.css" />
+    <script src="chatbot.js" defer></script>
     <style>
         :root {
             --primary-color: #0ff;
@@ -1446,8 +1448,165 @@ header.scrolled {
         }
 
         .synergy-alert a:hover span {
-    color: var(--primary-color);
-    text-decoration: underline;
+            color: var(--primary-color);
+            text-decoration: underline;
+
+                    /* Hide chatbot during loading */
+        .chatbot-container {
+            display: none; /* Initially hidden */
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            font-family: "Segoe UI", "Roboto", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+/* Mobile Chatbot Optimization */
+@media (max-width: 768px) {
+    /* Chatbot container adjustments */
+    .chatbot-container {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    /* Smaller toggle button on mobile */
+    .chatbot-toggle {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* Full-screen chatbot window on mobile */
+    .chatbot-window {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    /* Adjust chatbot header for mobile */
+    .chatbot-header {
+        padding: 12px 16px;
+    }
+
+    .bot-info h3 {
+        font-size: 1.1em;
+    }
+
+    .bot-avatar {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* Messages area takes more space */
+    .chatbot-messages {
+        height: calc(100vh - 140px); /* Adjust based on header and input height */
+        padding: 16px;
+    }
+
+    /* Message styling for mobile */
+    .message-content {
+        max-width: 85%;
+        font-size: 0.95em;
+    }
+
+    .message-time {
+        font-size: 0.75em;
+    }
+
+    /* Input area optimization */
+    .chatbot-input {
+        padding: 12px 16px 20px;
+        background: rgba(10, 10, 10, 0.95);
+    }
+
+    .input-container {
+        gap: 8px;
+    }
+
+    #message-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px 16px;
+    }
+
+    .send-button {
+        width: 44px;
+        height: 44px;
+        min-width: 44px; /* Better touch target */
+    }
+
+    /* Hide other elements when chatbot is open */
+    body.chatbot-open {
+        overflow: hidden;
+    }
+
+    body.chatbot-open .floating-register {
+        display: none;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 380px) {
+    .chatbot-toggle {
+        width: 45px;
+        height: 45px;
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .message-content {
+        font-size: 0.9em;
+    }
+
+    .chatbot-header {
+        padding: 10px 12px;
+    }
+
+    .bot-info h3 {
+        font-size: 1em;
+    }
+}
+
+/* Landscape mode adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+    .chatbot-messages {
+        height: calc(100vh - 120px);
+    }
+
+    .chatbot-header {
+        padding: 8px 16px;
+    }
+
+    .chatbot-input {
+        padding: 8px 16px 12px;
+    }
+}
+
+/* Fix z-index conflicts */
+.chatbot-container {
+    z-index: 9998; /* Just below loading overlay */
+}
+
+.chatbot-window {
+    z-index: 9999;
+}
+
+/* Ensure floating register button doesn't overlap */
+.floating-register {
+    bottom: 80px; /* Move up to avoid chatbot button */
+    z-index: 999;
+}
+
+@media (max-width: 768px) {
+    .floating-register {
+        bottom: 75px;
+        right: 16px;
+    }
+}
 }
     </style>
 </head>
@@ -1742,6 +1901,61 @@ header.scrolled {
             </div>
         </div>
     </footer>
+    
+<div class="chatbot-container">
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-toggle" id="chatbot-toggle">
+        <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+        </svg>
+        <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+    </button>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatbot-window">
+        <div class="chatbot-header">
+            <div class="header-content">
+                <div class="bot-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <circle cx="12" cy="5" r="2" />
+                        <path d="M12 7v4" />
+                        <line x1="8" y1="16" x2="8" y2="16" />
+                        <line x1="16" y1="16" x2="16" y2="16" />
+                    </svg>
+                </div>
+                <div class="bot-info">
+                    <h3>CICR AI Assistant</h3>
+                    <span class="status">Online</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    <p>Hello! I'm CICR AI Powered Assistant. How can I help you today?</p>
+                </div>
+                <div class="message-time">Just now</div>
+            </div>
+        </div>
+
+        <div class="chatbot-input">
+            <div class="input-container">
+                <input type="text" id="message-input" placeholder="Type your message..." autocomplete="off" />
+                <button class="send-button" id="send-button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22,2 15,22 11,13 2,9 22,2" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
@@ -1851,6 +2065,13 @@ header.scrolled {
                     setTimeout(() => {
                         loadingOverlay.style.opacity = '0';
                         body.style.overflow = 'auto';
+                        
+                        // Show the chatbot after loading is complete
+                        const chatbotContainer = document.querySelector('.chatbot-container');
+                        if (chatbotContainer) {
+                            chatbotContainer.style.display = 'block';
+                        }
+                        
                         setTimeout(() => {
                             loadingOverlay.style.display = 'none';
                         }, 500);
@@ -1975,6 +2196,41 @@ window.addEventListener('scroll', () => {
             li.classList.add('active');
         }
     });
+});
+
+// Mobile Chatbot Enhancements
+document.addEventListener('DOMContentLoaded', () => {
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const body = document.body;
+    
+    // Add mobile-specific chatbot handling
+    if (chatbotToggle && chatbotWindow) {
+        chatbotToggle.addEventListener('click', () => {
+            const isOpen = chatbotWindow.classList.contains('active');
+            
+            // On mobile, add class to body when chatbot is open
+            if (window.innerWidth <= 768) {
+                if (!isOpen) {
+                    body.classList.add('chatbot-open');
+                } else {
+                    body.classList.remove('chatbot-open');
+                }
+            }
+        });
+        
+        // Handle resize events
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                // Remove mobile classes if switching to desktop
+                if (window.innerWidth > 768) {
+                    body.classList.remove('chatbot-open');
+                }
+            }, 250);
+        });
+    }
 });
     </script>
 </body>
