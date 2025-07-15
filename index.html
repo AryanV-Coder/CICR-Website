@@ -2198,40 +2198,6 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Mobile Chatbot Enhancements
-document.addEventListener('DOMContentLoaded', () => {
-    const chatbotToggle = document.getElementById('chatbot-toggle');
-    const chatbotWindow = document.getElementById('chatbot-window');
-    const body = document.body;
-    
-    // Add mobile-specific chatbot handling
-    if (chatbotToggle && chatbotWindow) {
-        chatbotToggle.addEventListener('click', () => {
-            const isOpen = chatbotWindow.classList.contains('active');
-            
-            // On mobile, add class to body when chatbot is open
-            if (window.innerWidth <= 768) {
-                if (!isOpen) {
-                    body.classList.add('chatbot-open');
-                } else {
-                    body.classList.remove('chatbot-open');
-                }
-            }
-        });
-        
-        // Handle resize events
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                // Remove mobile classes if switching to desktop
-                if (window.innerWidth > 768) {
-                    body.classList.remove('chatbot-open');
-                }
-            }, 250);
-        });
-    }
-});
     </script>
 </body>
 </html>    
