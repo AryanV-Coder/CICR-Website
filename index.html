@@ -62,23 +62,261 @@
         padding: 0 15px;
       }
 
-      /* Header Styles */
+      /* Updated Header Styles */
       header {
-        background: rgba(0, 0, 0, 0.8);
-        padding: 20px 0;
+        background: rgba(10, 10, 10, 0.7);
+        backdrop-filter: blur(20px);
+        padding: 15px 0;
         position: fixed;
         width: 100%;
         top: 0;
         z-index: 1000;
         transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(0, 255, 255, 0.1);
       }
 
       header.scrolled {
-        background: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 2px 20px rgba(0, 255, 255, 0.2);
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 5px 30px rgba(0, 255, 255, 0.15);
+        padding: 10px 0;
       }
 
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+
+      .logo {
+        font-family: "Orbitron", sans-serif;
+        font-size: 2.2em;
+        font-weight: bold;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        z-index: 1001;
+      }
+
+      /* Desktop Navigation */
+      .desktop-nav {
+        display: flex;
+        align-items: center;
+      }
+
+      .desktop-nav ul {
+        list-style: none;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .desktop-nav ul li a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 1em;
+        padding: 10px 20px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: block;
+      }
+
+      .desktop-nav ul li a::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: rgba(0, 255, 255, 0.1);
+        transition: width 0.3s ease;
+        border-radius: 25px;
+      }
+
+      .desktop-nav ul li a:hover::before {
+        width: 100%;
+      }
+
+      .desktop-nav ul li a:hover {
+        color: var(--primary-color);
+        transform: translateY(-2px);
+      }
+
+      .desktop-nav ul li.active a {
+        background: rgba(0, 255, 255, 0.1);
+        color: var(--primary-color);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+      }
+
+      /* Mobile Menu Button */
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        z-index: 1001;
+        width: 30px;
+        height: 30px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hamburger {
+        width: 25px;
+        height: 2px;
+        background: var(--primary-color);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger::before,
+      .hamburger::after {
+        content: "";
+        position: absolute;
+        width: 25px;
+        height: 2px;
+        background: var(--primary-color);
+        transition: all 0.3s ease;
+      }
+
+      .hamburger::before {
+        top: -8px;
+      }
+
+      .hamburger::after {
+        top: 8px;
+      }
+
+      .mobile-menu-btn.active .hamburger {
+        background: transparent;
+      }
+
+      .mobile-menu-btn.active .hamburger::before {
+        top: 0;
+        transform: rotate(45deg);
+      }
+
+      .mobile-menu-btn.active .hamburger::after {
+        top: 0;
+        transform: rotate(-45deg);
+      }
+
+      /* Mobile Navigation */
+      .mobile-nav {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: rgba(17, 17, 17, 0.98);
+        backdrop-filter: blur(20px);
+        transition: right 0.3s ease;
+        z-index: 999;
+        padding: 80px 20px 20px;
+        overflow-y: auto;
+      }
+
+      .mobile-nav.active {
+        right: 0;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .mobile-nav ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .mobile-nav ul li a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 1.1em;
+        padding: 15px 20px;
+        display: block;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .mobile-nav ul li a::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 0;
+        background: var(--primary-color);
+        transition: height 0.3s ease;
+      }
+
+      .mobile-nav ul li a:hover,
+      .mobile-nav ul li.active a {
+        background: rgba(0, 255, 255, 0.1);
+        color: var(--primary-color);
+        padding-left: 30px;
+      }
+
+      .mobile-nav ul li a:hover::before,
+      .mobile-nav ul li.active a::before {
+        height: 60%;
+      }
+
+      /* Mobile Menu Overlay */
+      .mobile-menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .mobile-menu-overlay.active {
+        display: block;
+        opacity: 1;
+      }
+
+      /* Mobile Styles */
+      @media (max-width: 768px) {
+        .desktop-nav {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+
+        .mobile-nav {
+          display: block;
+        }
+
+        header {
+          padding: 15px 0;
+        }
+
+        .logo {
+          font-size: 1.8em;
+        }
+
+        body.menu-open {
+          overflow: hidden;
+        }
+      }
       .header-content {
         display: flex;
         justify-content: space-between;
@@ -1055,6 +1293,24 @@
         }
       }
 
+      .past-event {
+        opacity: 0.8;
+        position: relative;
+      }
+
+      .past-event::after {
+        content: "COMPLETED";
+        position: absolute;
+        top: 20px;
+        right: -30px;
+        background: var(--accent-color);
+        color: white;
+        padding: 5px 40px;
+        transform: rotate(45deg);
+        font-size: 0.8em;
+        font-weight: bold;
+      }
+
       /* Add styles for better touch targets */
       @media (max-width: 768px) and (hover: none) {
         nav ul li a,
@@ -1231,15 +1487,169 @@
         }
       }
 
-      /* Hide chatbot during loading */
-      .chatbot-container {
-        display: none; /* Initially hidden */
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        z-index: 9999;
-        font-family: "Segoe UI", "Roboto", "Inter", -apple-system,
-          BlinkMacSystemFont, sans-serif;
+      .synergy-alert a:hover span {
+        color: var(--primary-color);
+        text-decoration: underline;
+
+        /* Hide chatbot during loading */
+        .chatbot-container {
+          display: none; /* Initially hidden */
+          position: fixed;
+          bottom: 24px;
+          right: 24px;
+          z-index: 9999;
+          font-family: "Segoe UI", "Roboto", "Inter", -apple-system,
+            BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Mobile Chatbot Optimization */
+        @media (max-width: 768px) {
+          /* Chatbot container adjustments */
+          .chatbot-container {
+            bottom: 16px;
+            right: 16px;
+          }
+
+          /* Smaller toggle button on mobile */
+          .chatbot-toggle {
+            width: 50px;
+            height: 50px;
+          }
+
+          /* Full-screen chatbot window on mobile */
+          .chatbot-window {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100vh;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 0;
+            margin: 0;
+          }
+
+          /* Adjust chatbot header for mobile */
+          .chatbot-header {
+            padding: 12px 16px;
+          }
+
+          .bot-info h3 {
+            font-size: 1.1em;
+          }
+
+          .bot-avatar {
+            width: 35px;
+            height: 35px;
+          }
+
+          /* Messages area takes more space */
+          .chatbot-messages {
+            height: calc(
+              100vh - 140px
+            ); /* Adjust based on header and input height */
+            padding: 16px;
+          }
+
+          /* Message styling for mobile */
+          .message-content {
+            max-width: 85%;
+            font-size: 0.95em;
+          }
+
+          .message-time {
+            font-size: 0.75em;
+          }
+
+          /* Input area optimization */
+          .chatbot-input {
+            padding: 12px 16px 20px;
+            background: rgba(10, 10, 10, 0.95);
+          }
+
+          .input-container {
+            gap: 8px;
+          }
+
+          #message-input {
+            font-size: 16px; /* Prevents zoom on iOS */
+            padding: 12px 16px;
+          }
+
+          .send-button {
+            width: 44px;
+            height: 44px;
+            min-width: 44px; /* Better touch target */
+          }
+
+          /* Hide other elements when chatbot is open */
+          body.chatbot-open {
+            overflow: hidden;
+          }
+
+          body.chatbot-open .floating-register {
+            display: none;
+          }
+        }
+
+        /* Very small screens */
+        @media (max-width: 380px) {
+          .chatbot-toggle {
+            width: 45px;
+            height: 45px;
+            bottom: 12px;
+            right: 12px;
+          }
+
+          .message-content {
+            font-size: 0.9em;
+          }
+
+          .chatbot-header {
+            padding: 10px 12px;
+          }
+
+          .bot-info h3 {
+            font-size: 1em;
+          }
+        }
+
+        /* Landscape mode adjustments */
+        @media (max-width: 768px) and (orientation: landscape) {
+          .chatbot-messages {
+            height: calc(100vh - 120px);
+          }
+
+          .chatbot-header {
+            padding: 8px 16px;
+          }
+
+          .chatbot-input {
+            padding: 8px 16px 12px;
+          }
+        }
+
+        /* Fix z-index conflicts */
+        .chatbot-container {
+          z-index: 9998; /* Just below loading overlay */
+        }
+
+        .chatbot-window {
+          z-index: 9999;
+        }
+
+        /* Ensure floating register button doesn't overlap */
+        .floating-register {
+          bottom: 80px; /* Move up to avoid chatbot button */
+          z-index: 999;
+        }
+
+        @media (max-width: 768px) {
+          .floating-register {
+            bottom: 75px;
+            right: 16px;
+          }
+        }
       }
     </style>
   </head>
@@ -1260,17 +1670,32 @@
     <header id="main-header">
       <div class="container header-content">
         <div class="logo">CICR</div>
-        <nav>
+        <nav class="desktop-nav">
           <ul>
-            <li><a href="#hero">Home</a></li>
+            <li class="active"><a href="#hero">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#events">Events</a></li>
+            <li><a href="#past-events">Past Events</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <span class="hamburger"></span>
+        </button>
       </div>
     </header>
+
+    <nav class="mobile-nav" id="mobileNav">
+      <ul>
+        <li class="active"><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <a href="#events" class="floating-register" title="Register for Events">
       <i class="fas fa-rocket"></i>
@@ -1279,16 +1704,17 @@
     <section id="hero">
       <div class="hero-particles" id="particles-js"></div>
       <div class="hero-content">
-        <h1 class="glitch" data-text="Welcome to CICR">Welcome to CICR</h1>
-        <p class="hero-subtitle">The Robotic Club of JIIT-128</p>
-        <div class="synergy-alert">
-          <i class="fas fa-star"></i>
-          <span>Register now for Synergy'25 Events!</span>
-          <i class="fas fa-star"></i>
-        </div>
+        <h1 class="glitch" data-text="CICR">CICR</h1>
+        <p class="hero-subtitle">The Robotics Hub of JIIT-128</p>
         <div class="hero-cta">
-          <a href="#events" class="btn btn-primary">Register for Events</a>
-          <a href="#contact" class="btn btn-secondary">Query?</a>
+          <a
+            href="https://chat.whatsapp.com/GZNiuEOZYYPGOUZQUV1JVa?mode=r_c"
+            target="_blank"
+            class="btn btn-primary"
+          >
+            <i class="fab fa-whatsapp"></i> Join Our Community
+          </a>
+          <a href="#about" class="btn btn-secondary">Learn More</a>
         </div>
       </div>
     </section>
@@ -1387,6 +1813,51 @@
         <div class="events-grid">
           <div class="event">
             <div class="event-date">
+              <span class="date">TBA</span>
+              <span class="month"></span>
+            </div>
+            <div class="event-content">
+              <h3>TechTonic 2.0</h3>
+              <p>
+                Join us for an exciting workshop featuring hands-on projects,
+                amazing prizes, and cutting-edge technology!
+              </p>
+              <div class="event-details">
+                <div class="event-info">
+                  <i class="fas fa-user"></i> Individual Event
+                </div>
+                <div class="event-info">
+                  <i class="fas fa-chalkboard-teacher"></i> Workshop
+                </div>
+                <div class="event-info">
+                  <i class="fas fa-trophy"></i> Prizes + Projects
+                </div>
+              </div>
+              <div class="event-timing">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Date to be Announced</span>
+                <i class="fas fa-clock"></i>
+                <span>Time to be Announced</span>
+              </div>
+              <button
+                class="btn btn-primary event-btn"
+                disabled
+                style="opacity: 0.6; cursor: not-allowed"
+              >
+                Registration Coming Soon
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="past-events" class="section">
+      <div class="container">
+        <h2 class="section-title">Past Events</h2>
+        <div class="events-grid">
+          <div class="event">
+            <div class="event-date">
               <span class="date">28</span>
               <span class="month">FEB</span>
             </div>
@@ -1416,7 +1887,10 @@
               <a
                 href="https://forms.gle/Li3xmwbWrYMNEmGa7"
                 target="_blank"
+                button
                 class="btn btn-primary event-btn"
+                disabled
+                style="opacity: 0.6; cursor: not-allowed"
                 >Register Now</a
               >
             </div>
@@ -1452,7 +1926,10 @@
               <a
                 href="https://forms.gle/w3Uy2ZfCKm7Bm2UM8"
                 target="_blank"
+                button
                 class="btn btn-primary event-btn"
+                disabled
+                style="opacity: 0.6; cursor: not-allowed"
                 >Register Now</a
               >
             </div>
@@ -1463,22 +1940,69 @@
 
     <section id="contact" class="section">
       <div class="container">
-        <h2 class="section-title">Contact Us</h2>
-        <form id="contact-form" class="contact-form">
-          <div class="form-group">
-            <input type="text" id="name" required />
-            <label for="name">Name</label>
+        <h2 class="section-title">Get In Touch</h2>
+        <div
+          class="contact-grid"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+          "
+        >
+          <div class="contact-item">
+            <i
+              class="fas fa-envelope"
+              style="
+                font-size: 2em;
+                color: var(--primary-color);
+                margin-bottom: 15px;
+                display: block;
+              "
+            ></i>
+            <h4>Email Us</h4>
+            <a
+              href="mailto:contact@cicr.in"
+              style="color: var(--primary-color); text-decoration: none"
+            >
+              contact@cicr.in
+            </a>
           </div>
-          <div class="form-group">
-            <input type="email" id="email" required />
-            <label for="email">Email</label>
+          <div class="contact-item">
+            <i
+              class="fab fa-whatsapp"
+              style="
+                font-size: 2em;
+                color: var(--primary-color);
+                margin-bottom: 15px;
+                display: block;
+              "
+            ></i>
+            <h4>Join Community</h4>
+            <a
+              href="https://chat.whatsapp.com/GZNiuEOZYYPGOUZQUV1JVa?mode=r_c"
+              target="_blank"
+              style="color: var(--primary-color); text-decoration: none"
+            >
+              WhatsApp Group
+            </a>
           </div>
-          <div class="form-group">
-            <textarea id="message" required></textarea>
-            <label for="message">Message</label>
+          <div class="contact-item">
+            <i
+              class="fas fa-map-marker-alt"
+              style="
+                font-size: 2em;
+                color: var(--primary-color);
+                margin-bottom: 15px;
+                display: block;
+              "
+            ></i>
+            <h4>Visit Us</h4>
+            <p style="color: var(--text-secondary)">JIIT-128, Noida</p>
           </div>
-          <button type="submit" class="btn btn-primary">Send Message</button>
-        </form>
+        </div>
       </div>
     </section>
 
@@ -1523,13 +2047,97 @@
       </div>
     </footer>
 
+    <div class="chatbot-container">
+      <!-- Chatbot Toggle Button -->
+      <button class="chatbot-toggle" id="chatbot-toggle">
+        <svg
+          class="chat-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+        </svg>
+        <svg
+          class="close-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      <!-- Chatbot Window -->
+      <div class="chatbot-window" id="chatbot-window">
+        <div class="chatbot-header">
+          <div class="header-content">
+            <div class="bot-avatar">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <circle cx="12" cy="5" r="2" />
+                <path d="M12 7v4" />
+                <line x1="8" y1="16" x2="8" y2="16" />
+                <line x1="16" y1="16" x2="16" y2="16" />
+              </svg>
+            </div>
+            <div class="bot-info">
+              <h3>CICR AI Assistant</h3>
+              <span class="status">Online</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chatbot-messages" id="chatbot-messages">
+          <div class="message bot-message">
+            <div class="message-content">
+              <p>
+                Hello! I'm CICR AI Powered Assistant. How can I help you today?
+              </p>
+            </div>
+            <div class="message-time">Just now</div>
+          </div>
+        </div>
+
+        <div class="chatbot-input">
+          <div class="input-container">
+            <input
+              type="text"
+              id="message-input"
+              placeholder="Type your message..."
+              autocomplete="off"
+            />
+            <button class="send-button" id="send-button">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22,2 15,22 11,13 2,9 22,2" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
       // Particles.js Configuration
       particlesJS("particles-js", {
         particles: {
           number: {
-            value: 80,
+            value: window.innerHeight < 768 ? 40 : 80,
             density: {
               enable: true,
               value_area: 800,
@@ -1615,7 +2223,6 @@
         const loadingBar = document.querySelector(".loading-bar");
         const loadingPercentage = document.querySelector(".loading-percentage");
         const body = document.body;
-        const chatbotContainer = document.querySelector(".chatbot-container"); // Get chatbot element
 
         let progress = 0;
         const totalDuration = 2000; // 2 seconds
@@ -1634,7 +2241,11 @@
               body.style.overflow = "auto";
 
               // Show the chatbot after loading is complete
-              chatbotContainer.style.display = "block";
+              const chatbotContainer =
+                document.querySelector(".chatbot-container");
+              if (chatbotContainer) {
+                chatbotContainer.style.display = "block";
+              }
 
               setTimeout(() => {
                 loadingOverlay.style.display = "none";
@@ -1717,90 +2328,88 @@
           glitchText.style.animation = "none";
           void glitchText.offsetWidth; // Trigger reflow
           glitchText.style.animation = null;
-        }, 2500);
+        }, 5000);
       }
+
+      // Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+      const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+      const body = document.body;
+
+      function toggleMobileMenu() {
+        mobileMenuBtn.classList.toggle("active");
+        mobileNav.classList.toggle("active");
+        mobileMenuOverlay.classList.toggle("active");
+        body.classList.toggle("menu-open");
+      }
+
+      mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+      mobileMenuOverlay.addEventListener("click", toggleMobileMenu);
+
+      // Close mobile menu when clicking on links
+      document.querySelectorAll(".mobile-nav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          toggleMobileMenu();
+        });
+      });
+
+      // Active nav item based on scroll
+      window.addEventListener("scroll", () => {
+        let current = "";
+        const sections = document.querySelectorAll("section");
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (scrollY >= sectionTop - 200) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        const navLinks = document.querySelectorAll("nav ul li");
+        navLinks.forEach((li) => {
+          li.classList.remove("active");
+          if (li.querySelector(`a[href="#${current}"]`)) {
+            li.classList.add("active");
+          }
+        });
+      });
+
+      // Mobile Chatbot Enhancements
+      document.addEventListener("DOMContentLoaded", () => {
+        const chatbotToggle = document.getElementById("chatbot-toggle");
+        const chatbotWindow = document.getElementById("chatbot-window");
+        const body = document.body;
+
+        // Add mobile-specific chatbot handling
+        if (chatbotToggle && chatbotWindow) {
+          chatbotToggle.addEventListener("click", () => {
+            const isOpen = chatbotWindow.classList.contains("active");
+
+            // On mobile, add class to body when chatbot is open
+            if (window.innerWidth <= 768) {
+              if (!isOpen) {
+                body.classList.add("chatbot-open");
+              } else {
+                body.classList.remove("chatbot-open");
+              }
+            }
+          });
+
+          // Handle resize events
+          let resizeTimer;
+          window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+              // Remove mobile classes if switching to desktop
+              if (window.innerWidth > 768) {
+                body.classList.remove("chatbot-open");
+              }
+            }, 250);
+          });
+        }
+      });
     </script>
-    <!-- Chatbot Container - Add this at the end of your index.html body -->
-    <div class="chatbot-container">
-      <!-- Chatbot Toggle Button -->
-      <button class="chatbot-toggle" id="chatbot-toggle">
-        <svg
-          class="chat-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-        </svg>
-        <svg
-          class="close-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
-      </button>
-
-      <!-- Chatbot Window -->
-      <div class="chatbot-window" id="chatbot-window">
-        <div class="chatbot-header">
-          <div class="header-content">
-            <div class="bot-avatar">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <circle cx="12" cy="5" r="2" />
-                <path d="M12 7v4" />
-                <line x1="8" y1="16" x2="8" y2="16" />
-                <line x1="16" y1="16" x2="16" y2="16" />
-              </svg>
-            </div>
-            <div class="bot-info">
-              <h3>CICR AI Assistant</h3>
-              <span class="status">Online</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="chatbot-messages" id="chatbot-messages">
-          <div class="message bot-message">
-            <div class="message-content">
-              <p>Hello! I'm CICR AI Powered Assistant. How can I help you today?</p>
-            </div>
-            <div class="message-time">Just now</div>
-          </div>
-        </div>
-
-        <div class="chatbot-input">
-          <div class="input-container">
-            <input
-              type="text"
-              id="message-input"
-              placeholder="Type your message..."
-              autocomplete="off"
-            />
-            <button class="send-button" id="send-button">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <line x1="22" y1="2" x2="11" y2="13" />
-                <polygon points="22,2 15,22 11,13 2,9 22,2" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
   </body>
 </html>
