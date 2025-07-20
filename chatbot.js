@@ -6,7 +6,7 @@ class Chatbot {
         this.isResizing = false;
         this.dragOffset = { x: 0, y: 0 };
         this.resizeStart = { x: 0, y: 0, width: 0, height: 0, windowX: 0, windowY: 0 };
-        this.apiUrl = 'http://127.0.0.1:8000/chat'; // Replace with your FastAPI backend URL
+        this.apiUrl = 'https://cicrchatbot.onrender.com/chat'; // Replace with your FastAPI backend URL
         
         this.initElements();
         this.bindEvents();
