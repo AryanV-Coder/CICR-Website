@@ -323,7 +323,7 @@ class Chatbot {
     }
 
     parseMarkdown(text) {
- HE        // Comprehensive markdown parser for all common formatting
+        // Comprehensive markdown parser for all common formatting
         let html = text
             // Escape existing HTML tags first
             .replace(/&/g, '&amp;')
