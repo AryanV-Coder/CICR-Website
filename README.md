@@ -1,5 +1,5 @@
-# CICR - Centre for Innovation in Computational Robotics
-### The Official Robotics & Autonomous Systems Hub of JIIT-128 (React Edition)
+# CICR - Creative & Innovative Cell in Robotics
+### The Robotics Society of JIIT 128
 
 ![CICR Logo](public/cicr-logo.png)
 
