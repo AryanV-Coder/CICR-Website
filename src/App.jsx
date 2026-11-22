@@ -6,6 +6,7 @@ import TeamPage from './pages/TeamPage';
 import RegistrationPage from './pages/RegistrationPage';
 import ProjectsPage from './pages/ProjectsPage';
 import EventsPage from './pages/EventsPage';
+import CertificatePage from './pages/CertificatePage';
 import AIChatModal from './components/AIChatModal';
 import Chatbot from './components/Chatbot';
 import ExitGuard from './components/ExitGuard';
@@ -21,8 +22,19 @@ export default function App() {
       if (path === '/team' || hash === 'team') return 'team';
       if (path === '/projects' || path === '/project' || hash === 'projects' || hash === 'project') return 'projects';
       if (path === '/register' || path === '/registration' || path === '/registrations' || hash === 'register' || hash === 'registrations') return 'registrations';
+      if (path.startsWith('/certificate/')) return 'certificate';
     }
     return 'home';
+  });
+
+  // Extract certificate ID from URL (kept in sync with routing)
+  const [certificateId, setCertificateId] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      const match = path.match(/^\/certificate\/(.+)$/i);
+      return match ? match[1] : null;
+    }
+    return null;
   });
 
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -42,6 +54,11 @@ export default function App() {
         setCurrentPage('projects');
       } else if (path === '/register' || path === '/registration' || path === '/registrations' || hash === 'register' || hash === 'registrations') {
         setCurrentPage('registrations');
+      } else if (window.location.pathname.match(/^\/certificate\/.+/i)) {
+        // Extract certificate ID from actual pathname (preserve original case)
+        const match = window.location.pathname.match(/^\/certificate\/(.+)$/i);
+        setCertificateId(match ? match[1] : null);
+        setCurrentPage('certificate');
       } else {
         setCurrentPage('home');
       }
@@ -122,59 +139,67 @@ export default function App() {
 
   return (
     <div className="cicr-app-root">
-      {/* Starting Video Animation Preloader */}
+      {/* Starting Video Animation Preloader (plays first for all routes) */}
       {showPreloader && (
         <Preloader onComplete={() => setShowPreloader(false)} />
       )}
 
-      {/* Universal Swipe & Multi-Back Exit Guard */}
-      <ExitGuard
-        currentPage={currentPage}
-        setCurrentPage={handlePageChange}
-      />
-
-      {/* Fixed Header */}
-      {!showPreloader && (
-        <Navbar
-          currentPage={currentPage}
-          setCurrentPage={handlePageChange}
-          onOpenChat={() => setIsChatOpen(true)}
-        />
+      {/* Certificate verification page — shown after the video animation finishes */}
+      {!showPreloader && currentPage === 'certificate' && (
+        <CertificatePage certificateId={certificateId} />
       )}
 
-      {/* Main Routed Page Content */}
-      <main className="cicr-main-content">
-        {currentPage === 'home' && (
-          <LandingPage
+      {/* All other pages with the standard CICR chrome */}
+      {!showPreloader && currentPage !== 'certificate' && (
+        <>
+          {/* Universal Swipe & Multi-Back Exit Guard */}
+          <ExitGuard
+            currentPage={currentPage}
+            setCurrentPage={handlePageChange}
+          />
+
+          {/* Fixed Header */}
+          <Navbar
+            currentPage={currentPage}
             setCurrentPage={handlePageChange}
             onOpenChat={() => setIsChatOpen(true)}
           />
-        )}
-        {currentPage === 'events' && (
-          <EventsPage setCurrentPage={handlePageChange} />
-        )}
-        {currentPage === 'projects' && (
-          <ProjectsPage setCurrentPage={handlePageChange} />
-        )}
-        {currentPage === 'team' && (
-          <TeamPage setCurrentPage={handlePageChange} />
-        )}
-        {currentPage === 'registrations' && (
-          <RegistrationPage setCurrentPage={handlePageChange} />
-        )}
-      </main>
 
-      {/* Footer */}
-      <Footer setCurrentPage={handlePageChange} />
+          {/* Main Routed Page Content */}
+          <main className="cicr-main-content">
+            {currentPage === 'home' && (
+              <LandingPage
+                setCurrentPage={handlePageChange}
+                onOpenChat={() => setIsChatOpen(true)}
+              />
+            )}
+            {currentPage === 'events' && (
+              <EventsPage setCurrentPage={handlePageChange} />
+            )}
+            {currentPage === 'projects' && (
+              <ProjectsPage setCurrentPage={handlePageChange} />
+            )}
+            {currentPage === 'team' && (
+              <TeamPage setCurrentPage={handlePageChange} />
+            )}
+            {currentPage === 'registrations' && (
+              <RegistrationPage setCurrentPage={handlePageChange} />
+            )}
+          </main>
 
-      {/* AI Assistant Modal */}
-      <AIChatModal
-        isOpen={isChatOpen}
-        onClose={() => setIsChatOpen(false)}
-      />
+          {/* Footer */}
+          <Footer setCurrentPage={handlePageChange} />
 
-      {/* Floating Chatbot Widget in Bottom Right Corner (from previous-code) */}
-      {!showPreloader && <Chatbot />}
+          {/* AI Assistant Modal */}
+          <AIChatModal
+            isOpen={isChatOpen}
+            onClose={() => setIsChatOpen(false)}
+          />
+
+          {/* Floating Chatbot Widget in Bottom Right Corner (from previous-code) */}
+          <Chatbot />
+        </>
+      )}
     </div>
   );
 }
